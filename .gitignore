@@ -1,0 +1,24 @@
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# Data (large files + dataset licences: download locally, never commit)
+data/
+*.wav
+*.flac
+*.parquet
+*.duckdb
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Test & tool caches
+.pytest_cache/
+.ruff_cache/
+
+# macOS
+.DS_Store
+
+# Secrets (e.g. Hugging Face token)
+.env
