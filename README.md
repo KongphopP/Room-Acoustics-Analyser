@@ -42,6 +42,8 @@ Python 3.11, NumPy / SciPy, pandas, pyroomacoustics, DuckDB + SQL, scikit-learn,
 
 ## Getting started
 
+Requires Python 3.11 or newer (developed and tested on 3.11).
+
 ```bash
 git clone https://github.com/KongphopP/Room-Acoustics-Analyser.git
 cd Room-Acoustics-Analyser
