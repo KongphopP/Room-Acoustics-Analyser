@@ -92,7 +92,7 @@ def scan_wavs(folder=ARNI_DIR):
             "fs_original": info.samplerate,
             "fs": FS,
             "n_samples": n_samples_16k(info.frames, info.samplerate),
-            "room_type": "shoebox",
+            "room_type": "arni_lab",               # Aalto variable-acoustics lab
             "room_l": ROOM_DIMS[0], "room_w": ROOM_DIMS[1], "room_h": ROOM_DIMS[2],
             "src_x": SOURCE_POS[0], "src_y": SOURCE_POS[1], "src_z": SOURCE_POS[2],
             "mic_x": MIC_POS[mic][0], "mic_y": MIC_POS[mic][1], "mic_z": MIC_POS[mic][2],
