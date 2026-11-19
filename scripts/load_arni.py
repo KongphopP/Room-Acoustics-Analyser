@@ -12,7 +12,7 @@ Usage (from the repo root, after `python scripts/init_db.py --fresh`):
     python scripts/load_arni.py
 """
 import re
-from math import ceil
+from math import ceil, dist
 from pathlib import Path
 
 import duckdb
@@ -29,6 +29,19 @@ ARNI_CSV = RAW / "arni" / "combinations_setup.csv"
 FS = 16000                          # project sample rate
 ROOM_DIMS = (8.9, 6.3, 3.6)         # Arni room L x W x H in metres
 N_PANELS = 55
+
+# Positions in metres from Arni_layout.jpg (drawing is in cm, measured from the
+# inner wall surface). Origin (0, 0, 0) = bottom-left inner corner at floor level,
+# x along the 8.9 m wall, y along the 6.3 m wall, z = height (H on the drawing).
+# Distances given from the right or top wall are converted: x = 8.9 - d, y = 6.3 - d.
+SOURCE_POS = (2.40, 1.80, 1.43)
+MIC_POS = {
+    1: (8.9 - 1.75, 2.00, 1.35),
+    2: (8.9 - 2.00, 6.3 - 1.49, 1.39),
+    3: (4.45, 6.3 - 2.50, 1.44),
+    4: (1.30, 3.15, 1.54),
+    5: (3.81, 1.45, 1.54),
+}
 NAME_RE = re.compile(r"IR_numClosed_(\d+)_numComb_(\d+)_mic_(\d+)_sweep_(\d+)\.wav$")
 
 
@@ -81,6 +94,9 @@ def scan_wavs(folder=ARNI_DIR):
             "n_samples": n_samples_16k(info.frames, info.samplerate),
             "room_type": "shoebox",
             "room_l": ROOM_DIMS[0], "room_w": ROOM_DIMS[1], "room_h": ROOM_DIMS[2],
+            "src_x": SOURCE_POS[0], "src_y": SOURCE_POS[1], "src_z": SOURCE_POS[2],
+            "mic_x": MIC_POS[mic][0], "mic_y": MIC_POS[mic][1], "mic_z": MIC_POS[mic][2],
+            "distance_m": round(dist(SOURCE_POS, MIC_POS[mic]), 3),
             "arni_num_comb": num_comb,
             "_num_closed": num_closed,             # only used for a check below
         })
