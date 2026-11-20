@@ -22,3 +22,6 @@ data/
 
 # Secrets (e.g. Hugging Face token)
 .env
+
+# Run logs (Claude reads these)
+logs/
